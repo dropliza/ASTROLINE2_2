@@ -1,7 +1,6 @@
 @import "fonts.css";
 @import "reset.css";
 
-/* ===== ROOT ===== */
 :root {
   --color-light: #ffffff;
   --color-dark: #000;
@@ -16,15 +15,15 @@
   --container-padding-x: 0.75rem;
   --transition-duration: 0.2s;
 
-  /* поднятие круга + всего что с ним связано */
-  --circle-shift: 3.125rem; /* 50px */
+
+  --circle-shift: 3.125rem; /
 }
 
 @media (width <= 90.06125rem) {
   :root { --container-width: 80rem; }
 }
 
-/* ===== LAYOUT ===== */
+
 .container {
   max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
   margin-inline: auto;
@@ -37,7 +36,7 @@
   overflow: hidden;
 }
 
-/* ===== HELPERS ===== */
+
 .visually-hidden {
   position: absolute !important;
   width: 1px !important;
@@ -152,7 +151,7 @@ button[aria-label]::before {
   content: "";
 }
 
-/* ===== STARS LAYER (общий) ===== */
+
 .hero, .circle, .footer { position: relative; }
 
 .stars {
@@ -171,7 +170,6 @@ button[aria-label]::before {
   filter: brightness(0) invert(1);
 }
 
-/* позиции звёзд по умолчанию (hero/circle/footer используют этот размер) */
 .star--1 { top: 10%; left: 8%;  transform: scale(0.75); }
 .star--2 { top: 18%; left: 80%; transform: scale(1); }
 .star--3 { top: 48%; left: 16%; transform: scale(0.6); }
@@ -185,7 +183,7 @@ button[aria-label]::before {
   z-index: 2;
 }
 
-/* ===== HERO ===== */
+
 .hero__title {
   font-size: clamp(3.125rem, -0.5392156863rem + 15.0326797386vw, 17.5rem);
   text-align: center;
@@ -243,7 +241,6 @@ button[aria-label]::before {
   .hero__rocket { left: -60%; animation-duration: 12s; }
 }
 
-/* ===== Flying title ===== */
 .hero__title--fly {
   position: relative;
   text-align: center;
@@ -267,13 +264,11 @@ button[aria-label]::before {
 .hero__title--fly span:nth-child(8) { --x: 400px;  --y: 180px;  animation-delay: .35s; }
 .hero__title--fly span:nth-child(9) { --x: 500px;  --y: -220px; animation-delay: .4s; }
 
-/* ===== SECOND SCREEN: planets + astronauts ===== */
 .space-scene {
   position: relative;
   overflow: hidden;
 }
 
-/* звёзды (второй экран) — только размер отличается */
 .space-scene .star {
   width: clamp(40px, 4vw, 90px);
   height: auto;
@@ -287,7 +282,6 @@ button[aria-label]::before {
 .space-scene .star--4 { top: 55%; right: 18%; transform: scale(1.0); left: auto; }
 .space-scene .star--5 { bottom: 12%; left: 6%; transform: scale(1.2); top: auto; }
 
-/* Планеты */
 .space-scene__planet {
   position: absolute;
   z-index: 2;
@@ -296,7 +290,6 @@ button[aria-label]::before {
   user-select: none;
 }
 
-/* левитация планет (2 экран) */
 .space-scene__planet--mars,
 .space-scene__planet--europa {
   animation: float 6s ease-in-out infinite;
@@ -335,7 +328,6 @@ button[aria-label]::before {
   top: clamp(140px, 24vh, 320px);
 }
 
-/* Астронавты */
 .space-scene__astro {
   position: absolute;
   z-index: 3;
@@ -347,7 +339,6 @@ button[aria-label]::before {
   animation: astroDrift 12s linear infinite;
 }
 
-/* ЛЕВЫЙ */
 .space-scene__astro--left {
   width: clamp(140px, 16vw, 320px);
   left: clamp(-40px, -2vw, -10px);
@@ -358,7 +349,6 @@ button[aria-label]::before {
   animation-delay: -3s;
 }
 
-/* ПРАВЫЙ */
 .space-scene__astro--right {
   width: clamp(180px, 20vw, 380px);
   right: clamp(-6px, -0.3vw, 8px);
@@ -370,7 +360,6 @@ button[aria-label]::before {
   animation-delay: -8s;
 }
 
-/* ===== CIRCLE ===== */
 .circle__image {
   position: relative;
   top: 0;
@@ -395,20 +384,17 @@ button[aria-label]::before {
   text-wrap: nowrap;
 }
 
-/* 1 */
 .circle__text--1 {
   top: calc(clamp(6.25rem, 3.0637254902rem + 13.0718954248vw, 18.75rem) - var(--circle-shift));
   left: 50%;
   transform: translate(-50%, 0);
 }
 
-/* 2 */
 .circle__text--2 {
   top: calc(clamp(16.25rem, 7.4240196078rem + 36.2091503268vw, 50.875rem) - var(--circle-shift));
   left: clamp(-3.125rem, -11.887254902rem + 35.9477124183vw, 31.25rem);
 }
 
-/* 3 */
 .circle__text--3 {
   top: calc(clamp(14.0625rem, 7.1801470588rem + 28.2352941176vw, 41.0625rem) - var(--circle-shift));
   left: clamp(6.25rem, -10rem + 66.6666666667vw, 70rem);
@@ -460,7 +446,6 @@ button[aria-label]::before {
 
 
 
-/* ===== FOOTER ===== */
 .footer { position: relative; width: 100%; }
 
 .footer__saturn {
@@ -541,7 +526,6 @@ button[aria-label]::before {
   height: clamp(2.1875rem, 0.8492647059rem + 5.4901960784vw, 7.4375rem);
 }
 
-/* footer text */
 .footer__text-1,
 .footer__text-2 {
   position: relative;
@@ -582,7 +566,7 @@ button[aria-label]::before {
   }
 }
 
-/* ===== STAR FX (как было, но scoped) ===== */
+
 @keyframes starSoft {
   0% {
     filter: blur(6px);
@@ -616,14 +600,12 @@ button[aria-label]::before {
   }
 }
 
-/* было глобально .star--X, теперь только внутри .stars (результат тот же) */
 .stars .star--1 { animation: starSoft 3.5s ease-in-out infinite; }
 .stars .star--2 { animation: starPulse 2.8s ease-in-out infinite; }
 .stars .star--3 { animation: starSoft 4.5s ease-in-out infinite; }
 .stars .star--4 { animation: starPulse 3.2s ease-in-out infinite; }
 .stars .star--5 { animation: starSoft 5.5s ease-in-out infinite; }
 
-/* ===== KEYFRAMES ===== */
 @keyframes flyIn { to { opacity: 1; transform: translate(0, 0) scale(1); } }
 
 @keyframes rocketFly {
@@ -689,25 +671,22 @@ button[aria-label]::before {
 }
 
 @keyframes rocketLoop {
-  /* стоит на месте */
+
   0% {
     transform: translate(0, 0);
     opacity: 1;
   }
 
-  /* улёт */
   30% {
     transform: translate(-140vw, -140vh);
     opacity: 0;
   }
 
-  /* пауза — ракеты нет */
   60% {
     transform: translate(-140vw, -140vh);
     opacity: 0;
   }
 
-  /* возврат на место */
   100% {
     transform: translate(0, 0);
     opacity: 1;
