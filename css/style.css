@@ -1,0 +1,717 @@
+@import "fonts.css";
+@import "reset.css";
+
+/* ===== ROOT ===== */
+:root {
+  --color-light: #ffffff;
+  --color-dark: #000;
+  --color-gray: #717072;
+  --color-blue: #3A6F72;
+  --color-blue-alt: #94F1EE;
+  --color-accent: #ffd11a;
+  --color-red: #ff5500;
+
+  --font-family-base: "Pragmatica Ext", sans-serif;
+  --container-width: 120rem;
+  --container-padding-x: 0.75rem;
+  --transition-duration: 0.2s;
+
+  /* поднятие круга + всего что с ним связано */
+  --circle-shift: 3.125rem; /* 50px */
+}
+
+@media (width <= 90.06125rem) {
+  :root { --container-width: 80rem; }
+}
+
+/* ===== LAYOUT ===== */
+.container {
+  max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x);
+}
+
+.section {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===== HELPERS ===== */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  border: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  clip-path: inset(100%) !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+
+@media (width <= 47.99875rem) {
+  .hidden-mobile { display: none !important; }
+}
+@media (width > 47.99875rem) {
+  .visible-mobile { display: none !important; }
+}
+
+html { overflow-x: hidden; height: 100%; }
+
+body {
+  height: 100%;
+  min-height: 100vh;
+
+  font-size: clamp(0.625rem, 0.4975490196rem + 0.522875817vw, 1.125rem);
+  display: flex;
+  flex-direction: column;
+
+  font-family: var(--font-family-base);
+  letter-spacing: -0.03em;
+  color: var(--color-light);
+  background-color: var(--color-dark);
+
+  background-image: url("../back.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+main { flex-grow: 1; }
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+  color: var(--color-light);
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+  font-family: var(--font-family-accent);
+  font-weight: 500;
+}
+
+h4, .h4, h5, .h5, h6, .h6 { font-weight: 600; }
+
+h1, .h1 {
+  font-size: clamp(1.875rem, 1.237745098rem + 2.614379085vw, 4.375rem);
+  line-height: 1.2;
+}
+
+h2, .h2 {
+  font-size: clamp(1.75rem, 1.2720588235rem + 1.9607843137vw, 3.625rem);
+  line-height: 1.3;
+}
+
+h3, .h3 {
+  font-size: clamp(1.5rem, 1.2450980392rem + 1.045751634vw, 2.5rem);
+}
+
+h4, .h4 {
+  font-size: clamp(1.125rem, 0.9975490196rem + 0.522875817vw, 1.625rem);
+}
+
+h5, .h5 {
+  font-size: clamp(1.125rem, 1.0294117647rem + 0.3921568627vw, 1.5rem);
+}
+
+h6, .h6 {
+  font-size: clamp(1rem, 0.9362745098rem + 0.2614379085vw, 1.25rem);
+}
+
+a, button, label, input, textarea, select, svg * {
+  transition-duration: var(--transition-duration);
+}
+
+a { color: inherit; }
+a[class] { text-decoration: none; }
+
+@media (any-hover: hover) {
+  a:hover { color: var(--color-accent); }
+}
+@media (any-hover: none) {
+  a:active { color: var(--color-accent); }
+}
+
+:focus-visible {
+  outline: 0.125rem dashed var(--color-light);
+  outline-offset: 0.25rem;
+  transition-duration: 0s !important;
+}
+
+a[aria-label], button[aria-label] { position: relative; }
+
+a[aria-label]::before,
+button[aria-label]::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  content: "";
+}
+
+/* ===== STARS LAYER (общий) ===== */
+.hero, .circle, .footer { position: relative; }
+
+.stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  width: clamp(72px, 6vw, 180px);
+  height: auto;
+  opacity: 1;
+  filter: brightness(0) invert(1);
+}
+
+/* позиции звёзд по умолчанию (hero/circle/footer используют этот размер) */
+.star--1 { top: 10%; left: 8%;  transform: scale(0.75); }
+.star--2 { top: 18%; left: 80%; transform: scale(1); }
+.star--3 { top: 48%; left: 16%; transform: scale(0.6); }
+.star--4 { top: 64%; left: 72%; transform: scale(0.9); }
+.star--5 { top: 35%; left: 50%; transform: scale(0.7); }
+
+.hero > *:not(.stars),
+.circle > *:not(.stars),
+.footer > *:not(.stars) {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== HERO ===== */
+.hero__title {
+  font-size: clamp(3.125rem, -0.5392156863rem + 15.0326797386vw, 17.5rem);
+  text-align: center;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 0.25rem var(--color-light);
+  text-stroke: 0.25rem var(--color-light);
+}
+
+@media (width <= 63.99875rem) {
+  .hero__title {
+    -webkit-text-stroke: 0.125rem var(--color-light);
+    text-stroke: 0.125rem var(--color-light);
+  }
+}
+
+.hero__comet {
+  position: relative;
+  animation: cometLoop 5s infinite linear;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero__comet--1 {
+  left: clamp(0rem, -0.637254902rem + 2.614379085vw, 2.5rem);
+  width: clamp(6.25rem, 1.5183823529rem + 19.4117647059vw, 24.8125rem);
+  height: clamp(5rem, 1.8137254902rem + 13.0718954248vw, 17.5rem);
+  animation-delay: 0s;
+}
+
+.hero__comet--2 {
+  float: right;
+  right: clamp(0rem, -1.5931372549rem + 6.5359477124vw, 6.25rem);
+  width: clamp(6.25rem, 1.5183823529rem + 19.4117647059vw, 24.8125rem);
+  height: clamp(5rem, 1.8137254902rem + 13.0718954248vw, 17.5rem);
+  animation-delay: 1.2s;
+}
+
+.hero__rocket {
+  position: relative;
+  left: clamp(-28.125rem, -27.3284313725rem + -3.2679738562vw, -31.25rem);
+  bottom: clamp(12.5rem, 7.7205882353rem + 19.6078431373vw, 31.25rem);
+  min-width: clamp(37.875rem, 23.3615196078rem + 59.5424836601vw, 94.8125rem);
+  height: clamp(28.75rem, 17.7892156863rem + 44.9673202614vw, 71.75rem);
+  user-select: none;
+  will-change: transform;
+  animation: rocketFly 6s infinite linear;
+}
+
+@media (width <= 63.99875rem) {
+  .hero__rocket { left: -30%; animation-duration: 10s; }
+}
+
+@media (width <= 47.99875rem) {
+  .hero__rocket { left: -60%; animation-duration: 12s; }
+}
+
+/* ===== Flying title ===== */
+.hero__title--fly {
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.hero__title--fly span {
+  display: inline-block;
+  opacity: 0;
+  transform: translate(var(--x), var(--y)) scale(0.5);
+  animation: flyIn 2s ease-out forwards;
+}
+
+.hero__title--fly span:nth-child(1) { --x: -300px; --y: -200px; animation-delay: 0s; }
+.hero__title--fly span:nth-child(2) { --x: -200px; --y: 150px;  animation-delay: .05s; }
+.hero__title--fly span:nth-child(3) { --x: -100px; --y: -120px; animation-delay: .1s; }
+.hero__title--fly span:nth-child(4) { --x: 0px;    --y: 200px;  animation-delay: .15s; }
+.hero__title--fly span:nth-child(5) { --x: 120px;  --y: -160px; animation-delay: .2s; }
+.hero__title--fly span:nth-child(6) { --x: 200px;  --y: 140px;  animation-delay: .25s; }
+.hero__title--fly span:nth-child(7) { --x: 300px;  --y: -100px; animation-delay: .3s; }
+.hero__title--fly span:nth-child(8) { --x: 400px;  --y: 180px;  animation-delay: .35s; }
+.hero__title--fly span:nth-child(9) { --x: 500px;  --y: -220px; animation-delay: .4s; }
+
+/* ===== SECOND SCREEN: planets + astronauts ===== */
+.space-scene {
+  position: relative;
+  overflow: hidden;
+}
+
+/* звёзды (второй экран) — только размер отличается */
+.space-scene .star {
+  width: clamp(40px, 4vw, 90px);
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 1;
+}
+
+.space-scene .star--1 { top: 15%; left: 8%;  transform: scale(1.1); }
+.space-scene .star--2 { top: 10%; right: 10%; transform: scale(1.3); left: auto; }
+.space-scene .star--3 { top: 45%; left: 10%; transform: scale(0.9); }
+.space-scene .star--4 { top: 55%; right: 18%; transform: scale(1.0); left: auto; }
+.space-scene .star--5 { bottom: 12%; left: 6%; transform: scale(1.2); top: auto; }
+
+/* Планеты */
+.space-scene__planet {
+  position: absolute;
+  z-index: 2;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* левитация планет (2 экран) */
+.space-scene__planet--mars,
+.space-scene__planet--europa {
+  animation: float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.space-scene__planet--mars {
+  animation-duration: 5.5s;
+}
+
+.space-scene__planet--europa {
+  animation-duration: 6.7s;
+  animation-delay: 1s;
+}
+
+
+.space-scene__planet--mars {
+  width: clamp(140px, 18vw, 320px);
+  left: clamp(40px, 8vw, 160px);
+  top: clamp(140px, 24vh, 320px);
+}
+
+.space-scene__planet--moon {
+  width: clamp(180px, 22vw, 380px);
+  left: 50%;
+  top: 68%;
+  transform: translate(-50%, -50%);
+
+  animation: floatMoon 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+.space-scene__planet--europa {
+  width: clamp(150px, 20vw, 360px);
+  right: clamp(40px, 8vw, 160px);
+  top: clamp(140px, 24vh, 320px);
+}
+
+/* Астронавты */
+.space-scene__astro {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+  height: auto;
+  filter: drop-shadow(0 10px 25px rgba(0,0,0,.55));
+  will-change: transform;
+  animation: astroDrift 12s linear infinite;
+}
+
+/* ЛЕВЫЙ */
+.space-scene__astro--left {
+  width: clamp(140px, 16vw, 320px);
+  left: clamp(-40px, -2vw, -10px);
+  top: clamp(0px, 2vh, 30px);
+
+  --rot: -20deg;
+  animation-duration: 13s;
+  animation-delay: -3s;
+}
+
+/* ПРАВЫЙ */
+.space-scene__astro--right {
+  width: clamp(180px, 20vw, 380px);
+  right: clamp(-6px, -0.3vw, 8px);
+  bottom: clamp(-10px, 2vh, 40px);
+  top: auto;
+
+  --rot: 0deg;
+  animation-duration: 15s;
+  animation-delay: -8s;
+}
+
+/* ===== CIRCLE ===== */
+.circle__image {
+  position: relative;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  width: clamp(9.375rem, 2.4926470588rem + 28.2352941176vw, 36.375rem);
+  height: clamp(9.375rem, 3.0183823529rem + 26.0784313725vw, 34.3125rem);
+  animation: spin 20s linear infinite;
+  transform-origin: center;
+  will-change: transform;
+  user-select: none;
+  pointer-events: none;
+}
+
+.circle__text {
+  font-size: clamp(0.375rem, 0.0723039216rem + 1.2418300654vw, 1.5625rem);
+  color: #fff;
+  position: relative;
+  text-align: center;
+  max-width: 18.75rem;
+  opacity: 0.8;
+  text-wrap: nowrap;
+}
+
+/* 1 */
+.circle__text--1 {
+  top: calc(clamp(6.25rem, 3.0637254902rem + 13.0718954248vw, 18.75rem) - var(--circle-shift));
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+/* 2 */
+.circle__text--2 {
+  top: calc(clamp(16.25rem, 7.4240196078rem + 36.2091503268vw, 50.875rem) - var(--circle-shift));
+  left: clamp(-3.125rem, -11.887254902rem + 35.9477124183vw, 31.25rem);
+}
+
+/* 3 */
+.circle__text--3 {
+  top: calc(clamp(14.0625rem, 7.1801470588rem + 28.2352941176vw, 41.0625rem) - var(--circle-shift));
+  left: clamp(6.25rem, -10rem + 66.6666666667vw, 70rem);
+}
+
+.circle__rocket {
+  position: relative;
+  user-select: none;
+
+  animation: rocketLoop 12s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.circle__rocket--1 {
+  bottom: calc(clamp(9.375rem, 1.0906862745rem + 33.9869281046vw, 41.875rem) + var(--circle-shift));
+  width: clamp(6.25rem, 1.9803921569rem + 17.5163398693vw, 23rem);
+  height: clamp(6.25rem, 1.9803921569rem + 17.5163398693vw, 23rem);
+}
+
+.circle__rocket--2 {
+  bottom: calc(clamp(15.625rem, 3.0392156863rem + 51.6339869281vw, 65rem) + var(--circle-shift));
+  float: right;
+  rotate: 90deg;
+  width: clamp(6.25rem, 1.9803921569rem + 17.5163398693vw, 23rem);
+  height: clamp(6.25rem, 1.9803921569rem + 17.5163398693vw, 23rem);
+}
+
+.circle__rocket--3 {
+  bottom: calc(clamp(6.25rem, 1.1519607843rem + 20.9150326797vw, 26.25rem) + var(--circle-shift));
+  left: clamp(0rem, -1.5931372549rem + 6.5359477124vw, 6.25rem);
+  rotate: 270deg;
+  width: clamp(5rem, 1.7659313725rem + 13.2679738562vw, 17.6875rem);
+  height: clamp(5rem, 1.7659313725rem + 13.2679738562vw, 17.6875rem);
+}
+
+.circle__rocket--4 {
+  bottom: calc(clamp(12.5rem, 4.4546568627rem + 33.0065359477vw, 44.0625rem) + var(--circle-shift));
+  float: right;
+  left: clamp(6.25rem, 3.0637254902rem + 13.0718954248vw, 18.75rem);
+  rotate: 180deg;
+  width: clamp(5rem, 1.7659313725rem + 13.2679738562vw, 17.6875rem);
+  height: clamp(5rem, 1.7659313725rem + 13.2679738562vw, 17.6875rem);
+}
+
+.circle__rocket--1 { animation-delay: 0s; }
+.circle__rocket--2 { animation-delay: 2s; }
+.circle__rocket--3 { animation-delay: 4s; }
+.circle__rocket--4 { animation-delay: 6s; }
+
+
+
+/* ===== FOOTER ===== */
+.footer { position: relative; width: 100%; }
+
+.footer__saturn {
+  position: relative;
+  width: clamp(12.5rem, 1.3480392157rem + 45.7516339869vw, 56.25rem);
+  height: clamp(12.5rem, 1.3480392157rem + 45.7516339869vw, 56.25rem);
+  pointer-events: none;
+  user-select: none;
+}
+
+.footer__comet {
+  position: relative;
+  animation: cometLoop 5s infinite linear;
+  pointer-events: none;
+  user-select: none;
+}
+
+.footer__comet--1 {
+  bottom: clamp(15.625rem, 5.2696078431rem + 42.4836601307vw, 56.25rem);
+  width: clamp(8.75rem, 5.2450980392rem + 14.3790849673vw, 22.5rem);
+  height: clamp(5rem, 2.4509803922rem + 10.4575163399vw, 15rem);
+  left: clamp(6.25rem, -5.5392156863rem + 48.3660130719vw, 52.5rem);
+  animation-delay: 0s;
+}
+
+.footer__comet--2 {
+  bottom: clamp(12.5rem, 7.7205882353rem + 19.6078431373vw, 31.25rem);
+  left: clamp(12.5rem, -1.0416666667rem + 55.5555555556vw, 65.625rem);
+  width: clamp(5rem, 3.0723039216rem + 7.908496732vw, 12.5625rem);
+  height: clamp(2.5rem, 1.0024509804rem + 6.1437908497vw, 8.375rem);
+  animation-delay: 2s;
+}
+
+.footer__earth {
+  position: relative;
+  animation: float 4s ease-in-out infinite;
+  pointer-events: none;
+  user-select: none;
+}
+
+.footer__earth--1 {
+  animation-duration: 5s;
+  animation-delay: 0s;
+  float: right;
+  bottom: calc(clamp(23.125rem, 7.512254902rem + 64.0522875817vw, 84.375rem) - 6rem);
+  width: clamp(8.125rem, 3.7916666667rem + 17.7777777778vw, 25.125rem);
+  height: clamp(8.125rem, 3.9031862745rem + 17.3202614379vw, 24.6875rem);
+  right: clamp(0rem, -1.5931372549rem + 6.5359477124vw, 6.25rem);
+}
+
+.footer__earth--2 {
+  animation-duration: 6s;
+  animation-delay: 0.5s;
+  float: right;
+  right: clamp(0rem, 1.1151960784rem + -4.5751633987vw, -4.375rem);
+  bottom: calc(clamp(17.5rem, 5.2328431373rem + 50.3267973856vw, 65.625rem) - 6rem);
+  width: clamp(3.125rem, 1.4362745098rem + 6.9281045752vw, 9.75rem);
+  height: clamp(3.125rem, 1.4840686275rem + 6.7320261438vw, 9.5625rem);
+}
+
+.footer__earth--3 {
+  animation-duration: 4.5s;
+  animation-delay: 1s;
+  float: right;
+  left: clamp(6.25rem, 3.0637254902rem + 13.0718954248vw, 18.75rem);
+  bottom: calc(clamp(15.625rem, 5.2696078431rem + 42.4836601307vw, 56.25rem) - 6rem);
+  width: clamp(1.875rem, 0.7120098039rem + 4.7712418301vw, 6.4375rem);
+  height: clamp(1.875rem, 0.743872549rem + 4.6405228758vw, 6.3125rem);
+}
+
+.footer__earth--4 {
+  animation-duration: 5.5s;
+  animation-delay: 1.5s;
+  float: right;
+  left: clamp(12.5rem, 5.8088235294rem + 27.4509803922vw, 38.75rem);
+  bottom: calc(clamp(15.625rem, 4.1544117647rem + 47.0588235294vw, 60.625rem) - 6rem);
+  width: clamp(2.1875rem, 0.8174019608rem + 5.6209150327vw, 7.5625rem);
+  height: clamp(2.1875rem, 0.8492647059rem + 5.4901960784vw, 7.4375rem);
+}
+
+/* footer text */
+.footer__text-1,
+.footer__text-2 {
+  position: relative;
+  z-index: 100000;
+  font-size: clamp(1.25rem, 0.4534313725rem + 3.2679738562vw, 4.375rem);
+  text-wrap: nowrap;
+}
+
+.footer.section { position: relative; }
+
+.footer__text{
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  bottom: 0 !important;
+  top: auto !important;
+  transform: none !important;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-inline: var(--container-padding-x);
+
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  -webkit-text-stroke: 0.125rem var(--color-light);
+  text-stroke: 0.125rem var(--color-light);
+
+  z-index: 9999999 !important;
+  pointer-events: none;
+}
+
+@media (width <= 63.99875rem){
+  .footer__text{
+    -webkit-text-stroke: 0.0625rem var(--color-light);
+    text-stroke: 0.0625rem var(--color-light);
+  }
+}
+
+/* ===== STAR FX (как было, но scoped) ===== */
+@keyframes starSoft {
+  0% {
+    filter: blur(6px);
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  50% {
+    filter: blur(0);
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    filter: blur(22px);
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes starPulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+}
+
+/* было глобально .star--X, теперь только внутри .stars (результат тот же) */
+.stars .star--1 { animation: starSoft 3.5s ease-in-out infinite; }
+.stars .star--2 { animation: starPulse 2.8s ease-in-out infinite; }
+.stars .star--3 { animation: starSoft 4.5s ease-in-out infinite; }
+.stars .star--4 { animation: starPulse 3.2s ease-in-out infinite; }
+.stars .star--5 { animation: starSoft 5.5s ease-in-out infinite; }
+
+/* ===== KEYFRAMES ===== */
+@keyframes flyIn { to { opacity: 1; transform: translate(0, 0) scale(1); } }
+
+@keyframes rocketFly {
+  0% {
+    transform: translate(
+      calc(-100vw - 140%),
+      calc(100vh + 140%)
+    );
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  85% {
+    transform: translate(
+      calc(100vw + 140%),
+      calc(-100vh - 140%)
+    );
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(
+      calc(100vw + 140%),
+      calc(-100vh - 140%)
+    );
+    opacity: 0;
+  }
+}
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes floatMoon {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-15px);
+  }
+}
+
+
+@keyframes cometLoop {
+  0% { transform: translate(100vw, -100vh); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translate(-100vw, 173.2vh); opacity: 0; }
+}
+
+@keyframes astroDrift {
+  0%   { transform: translate(0, 0) rotate(var(--rot, 0deg)); }
+  20%  { transform: translate(70px, -50px) rotate(calc(var(--rot, 0deg) + 18deg)); }
+  45%  { transform: translate(140px, 20px) rotate(calc(var(--rot, 0deg) + 32deg)); }
+  70%  { transform: translate(60px, 90px) rotate(calc(var(--rot, 0deg) + 18deg)); }
+  100% { transform: translate(0, 0) rotate(var(--rot, 0deg)); }
+}
+
+@keyframes rocketLoop {
+  /* стоит на месте */
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
+  /* улёт */
+  30% {
+    transform: translate(-140vw, -140vh);
+    opacity: 0;
+  }
+
+  /* пауза — ракеты нет */
+  60% {
+    transform: translate(-140vw, -140vh);
+    opacity: 0;
+  }
+
+  /* возврат на место */
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+

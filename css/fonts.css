@@ -1,0 +1,7 @@
+@font-face {
+  font-family: "Pragmatica Ext";
+  src: url("../fonts/PragmaticaExtBold-Reg.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
